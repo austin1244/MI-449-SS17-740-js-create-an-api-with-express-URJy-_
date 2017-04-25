@@ -1,8 +1,10 @@
 module.exports = {
   'do-homework': {
-    name: 'Finish Homework'
+    text: "Finsish Homework",
+    completed: false
   },
   'take-out-trash': {
-    name: 'Take out the trash'
+    text: "Finsish Homework",
+    completed: false
   }
 }
