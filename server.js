@@ -7,39 +7,38 @@ var port = process.env.PORT || 8080
 var bodyParser = require('body-parser')
 app.use(bodyParser.json())
 
-app.get('/todo', function (request, response) {
+app.get('/todos', function (request, response) {
   response.json(todo)
 })
 
-app.get('/todo/:id', function (request, response) {
-  if (!todo[request.params.id]){
+app.get('/todos/:id', function (request, response) {
+  if (!todo[request.params.id]) {
     response.status(404).end('sorry, could not find the todo ' + request.params.id)
     return
-  } 
+  }
   response.json(todo[request.params.id])
 })
 
-app.post('/todo', function(request, response) {
-  var input = request.body
+app.post('/todos', function (request, response) {
   var slug = request.body.text.trim().toLowerCase().split(' ').join('-')
   todo[slug] = request.body
-  response.redirect("/todo");
+  response.redirect('/todos')
 })
 
-app.put('/todo/:id', function (request, response) {
-  var selectedTodo = products[request.params.slug] || {}
+app.put('/todos/:id', function (request, response) {
+  var selectedTodo = todo[request.params.id] || {}
   if (request.body.text !== undefined) {
-     selectedTodo.text = request.body.text.trim()
+    selectedTodo.text = request.body.text.trim()
   }
   if (request.body.completed !== undefined) {
-    selectedTodo.completed = request.body.completed ? true : false
+    selectedTodo.completed = request.body.completed
   }
-  response.redirect('/todo')
+  response.redirect('/todos')
 })
 
-app.delete('/todo/:id', function (request, response) {
+app.delete('/todos/:id', function (request, response) {
   delete todo[request.params.id]
-  response.redirect('/todo')
+  response.redirect('/todos')
 })
 
 app.use(function (request, response, next) {
